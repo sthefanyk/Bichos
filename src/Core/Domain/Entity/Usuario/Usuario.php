@@ -8,6 +8,7 @@ use Core\Domain\Entity\Usuario\ValueObjects\TipoUsuario;
 use Core\Domain\Entity\Uuid;
 use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Validation\DomainValidation;
+use DateTime;
 
 abstract class Usuario
 {
@@ -20,10 +21,12 @@ abstract class Usuario
         protected Uuid|string $id = '',
         protected string $nome_usuario = '',
         protected bool $eh_ativo = true,
+        protected DateTime|string $data_criacao = '',
     )
     {
         $this->nome_usuario = $this->nome_usuario ? $this->nome_usuario : $this->apelido;
         $this->id = $this->id ? new Uuid($this->id) : Uuid::random();
+        $this->data_criacao = $this->data_criacao ? new DateTime($this->data_criacao): new DateTime();
         $this->validar();
     }
 

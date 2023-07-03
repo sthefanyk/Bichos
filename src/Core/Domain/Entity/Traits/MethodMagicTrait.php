@@ -22,12 +22,12 @@ trait MethodMagicTrait
         return (string) $this->id;
     }
 
-    public function data_validacao(string $format = ''): string
+    public function data_criacao(string $format = ''): string
     {
         if ($format) {
-            return $this->data_validacao->format($format);
+            return $this->data_criacao->format($format);
         }
-        return $this->data_validacao->format('Y-m-d H:i:s');
+        return $this->data_criacao->format('Y-m-d H:i:s');
     }
 
 }

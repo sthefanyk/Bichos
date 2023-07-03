@@ -38,6 +38,7 @@ class AbrigoUnitTest extends TestCase
         $this->assertEquals(TipoUsuario::ABRIGO, $abrigo->tipo_usuario);
         $this->assertTrue($abrigo->eh_ativo);
         $this->assertNotEmpty($abrigo->id);
+        $this->assertNotEmpty($abrigo->data_criacao());
     }
 
     public function test_abrigo_atualizar()

@@ -20,6 +20,7 @@ class Associacao extends Usuario
         Uuid|string $id = '',
         string $nome_usuario = '',
         bool $eh_ativo = true,
+        DateTime|string $data_criacao = '',
     )
     {
         parent::__construct(
@@ -28,7 +29,8 @@ class Associacao extends Usuario
             nome_usuario: $nome_usuario,
             email: $email,
             tipo_usuario: TipoUsuario::ASSOCIACAO,
-            eh_ativo: $eh_ativo
+            eh_ativo: $eh_ativo,
+            data_criacao: $data_criacao
         );
 
         $this->validar();
@@ -41,6 +43,7 @@ class Associacao extends Usuario
         string $novo_apelido = '',
         Email $novo_email = null,
         string $novo_nome_usuario = '',
+        DateTime|string $data_criacao = '',
     ){
         $this->cnpj = $novo_cnpj ? $novo_cnpj : $this->cnpj;
         $this->nome_associacao = $novo_nome_associacao ? $novo_nome_associacao : $this->nome_associacao;
@@ -48,6 +51,10 @@ class Associacao extends Usuario
         $this->apelido = $novo_apelido ? $novo_apelido : $this->apelido;
         $this->nome_usuario = $novo_nome_usuario ? $novo_nome_usuario : $this->nome_usuario;
         $this->email = $novo_email ? $novo_email : $this->email;
+        $this->data_criacao = $data_criacao ? $data_criacao : $this->data_criacao;
+        if (!$this->data_criacao instanceof DateTime) {
+            $this->data_criacao = new DateTime($this->data_criacao);
+        }
         parent::validar();
         $this->validar();
     }

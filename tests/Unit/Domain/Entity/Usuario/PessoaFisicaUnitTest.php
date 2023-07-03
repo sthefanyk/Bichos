@@ -29,6 +29,7 @@ class PessoaFisicaUnitTest extends TestCase
             apelido: 'apelido',
             email: $email,
             pessoa: $pessoa,
+            data_criacao: '2023/07/03',
         );
 
         $this->assertEquals($uuid, $pessoa_fisica->id);
@@ -38,6 +39,7 @@ class PessoaFisicaUnitTest extends TestCase
         $this->assertEquals(TipoUsuario::PESSOA_FISICA, $pessoa_fisica->tipo_usuario);
         $this->assertEquals(true, $pessoa_fisica->eh_ativo);
         $this->assertEquals($pessoa, $pessoa_fisica->pessoa);
+        $this->assertEquals('2023/07/03', $pessoa_fisica->data_criacao('Y/m/d'));
     }
 
     public function test_pessoa_fisica_atualizar()
@@ -70,13 +72,15 @@ class PessoaFisicaUnitTest extends TestCase
             novo_apelido: 'novoapelido',
             novo_email: $novo_email,
             nova_pessoa: $nova_pessoa,
-            novo_nome_usuario: 'novonomeusuario'
+            novo_nome_usuario: 'novonomeusuario',
+            data_criacao: '2023/07/02',
         );
 
         $this->assertEquals('novoapelido', $pessoa_fisica->apelido);
         $this->assertEquals('novonomeusuario', $pessoa_fisica->nome_usuario);
         $this->assertEquals($nova_pessoa, $pessoa_fisica->pessoa);
         $this->assertEquals($novo_email, $pessoa_fisica->email);
+        $this->assertEquals('2023/07/02', $pessoa_fisica->data_criacao('Y/m/d'));
     }
 
     public function test_pessoa_fisica_atualizar_parametro_opcional()

@@ -33,6 +33,7 @@ class AssociacaoUnitTest extends TestCase
         $this->assertEquals(TipoUsuario::ASSOCIACAO, $associacao->tipo_usuario);
         $this->assertTrue($associacao->eh_ativo);
         $this->assertNotEmpty($associacao->id);
+        $this->assertNotEmpty($associacao->data_criacao());
     }
 
     public function test_associacao_atualizar()
@@ -53,6 +54,7 @@ class AssociacaoUnitTest extends TestCase
             novo_apelido: 'ongApelidoNovo',
             novo_nome_usuario: 'novo nome usuario ong',
             novo_email: new Email('ongnova@gmail.com'),
+            data_criacao: new DateTime('2023/07/02'),
         );
 
         $this->assertEquals(new Cnpj('33.247.151/0001-06'), $associacao->cnpj);
@@ -65,6 +67,7 @@ class AssociacaoUnitTest extends TestCase
         $this->assertEquals(TipoUsuario::ASSOCIACAO, $associacao->tipo_usuario);
         $this->assertTrue($associacao->eh_ativo);
         $this->assertNotEmpty($associacao->id);
+        $this->assertEquals('2023/07/02', $associacao->data_criacao('Y/m/d'));
     }
 
     public function test_associacao_data_registro_exception()
