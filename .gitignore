@@ -19,3 +19,7 @@ yarn-error.log
 /.composer
 /.devcontainer
 /.dotnet
+/.cache
+/.config
+/.local
+
