@@ -72,7 +72,7 @@ class PersonalidadeUnitTest extends TestCase
         $this->assertTrue($personalidade->eh_ativo);
 
         $personalidade->desativar();
-        
+
         $this->assertFalse($personalidade->eh_ativo);
     }
 
@@ -81,7 +81,7 @@ class PersonalidadeUnitTest extends TestCase
         $personalidade = new Personalidade(
             nome: 'New personalidade'
         );
-        
+
         $this->assertEquals('New personalidade', $personalidade->nome);
 
         $personalidade->atualizar(

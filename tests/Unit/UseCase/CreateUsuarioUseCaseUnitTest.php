@@ -19,7 +19,7 @@ class CreateUsuarioUseCaseUnitTest extends TestCase
     protected $mockEntity;
     protected $mockRepo;
 
-    public function test_create_use_case()
+    public function test_usuario_create_usecase()
     {
         $usuarioEmail = new Email("email@example.com");
         $usuarioCpf = new Cpf('135.028.149-29');

@@ -4,7 +4,6 @@ namespace Core\Domain\Entity;
 
 use Core\Domain\Entity\Uuid;
 use Core\Domain\Entity\Traits\MethodMagicTrait;
-use Core\Domain\Exception\EntityValidationException;
 use Core\Domain\Validation\DomainValidation;
 use DateTime;
 
@@ -38,7 +37,7 @@ class Personalidade
         $this->validar();
     }
 
-    public function validar(){
+    private function validar(){
         DomainValidation::strMinLength($this->nome);
         DomainValidation::strMaxLength($this->nome);
     }
