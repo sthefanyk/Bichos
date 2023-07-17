@@ -12,6 +12,5 @@ interface PersonalidadeRepositoryInterface
     public function paginate(string $filter = '', $order = 'DESC', int $page = 1, int $total_page = 15): PaginationInterface;
     public function update(Personalidade $personalidade): Personalidade;
     public function delete(string $id): bool;
-    public function toPersonalidade(object $data): Personalidade;
 }
 
