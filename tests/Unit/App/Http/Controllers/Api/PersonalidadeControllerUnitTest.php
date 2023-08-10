@@ -42,5 +42,7 @@ class PersonalidadeControllerUnitTest extends TestCase
         $mockUseCaseSpy->shouldReceive('execute')->andReturn($mockDtoOutput);
         $controller->index($mockRequest, $mockUseCaseSpy);
         $mockUseCaseSpy->shouldReceive('execute');
+
+        Mockery::close();
     }
 }
