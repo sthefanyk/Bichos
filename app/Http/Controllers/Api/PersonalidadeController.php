@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StorePersonalidadeRequest;
 use App\Http\Resources\PersonalidadeResource;
+use Core\UseCase\DTO\Personalidade\Create\PersonalidadeCreateInputDto;
 use Core\UseCase\DTO\Personalidade\Listt\ListPersonalidadeInputDto;
+use Core\UseCase\Personalidade\CreatePersonalidadeUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadesUseCase;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PersonalidadeController extends Controller
 {
@@ -33,5 +37,19 @@ class PersonalidadeController extends Controller
                                                     'from' => $response->from,
                                                 ]
                                             ]);
+    }
+
+    public function store(StorePersonalidadeRequest $request, CreatePersonalidadeUseCase $usecase)
+    {
+        $response = $usecase->execute(
+            input: new PersonalidadeCreateInputDto(
+                nome: $request->nome,
+                eh_ativo: (bool) $request->eh_ativo ?? true,
+            )
+        );
+
+        return (new PersonalidadeResource($response))
+                    ->response()
+                    ->setStatusCode(Response::HTTP_CREATED);
     }
 }
