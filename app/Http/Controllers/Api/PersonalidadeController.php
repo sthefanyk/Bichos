@@ -7,8 +7,10 @@ use App\Http\Requests\StorePersonalidadeRequest;
 use App\Http\Resources\PersonalidadeResource;
 use Core\UseCase\DTO\Personalidade\Create\PersonalidadeCreateInputDto;
 use Core\UseCase\DTO\Personalidade\Listt\ListPersonalidadeInputDto;
+use Core\UseCase\DTO\Personalidade\PersonalidadeInputDto;
 use Core\UseCase\Personalidade\CreatePersonalidadeUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadesUseCase;
+use Core\UseCase\Personalidade\ListPersonalidadeUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -52,4 +54,14 @@ class PersonalidadeController extends Controller
                     ->response()
                     ->setStatusCode(Response::HTTP_CREATED);
     }
+
+    public function show(ListPersonalidadeUseCase $usecase,  $id)
+    {
+        $response = $usecase->execute(new PersonalidadeInputDto($id));
+
+        return (new PersonalidadeResource($response))
+                    ->response()
+                    ->setStatusCode(Response::HTTP_CREATED);
+    }
+
 }

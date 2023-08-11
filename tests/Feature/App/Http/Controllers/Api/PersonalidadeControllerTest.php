@@ -58,4 +58,18 @@ class PersonalidadeControllerTest extends TestCase
         $this->assertEquals(Response::HTTP_CREATED, $response->status());
 
     }
+
+
+    public function test_personalidade_show()
+    {
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->controller->show(
+            usecase: new ListPersonalidadeUseCase($this->repository),
+            id: $personalidade->id,
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_CREATED, $response->status());
+    }
 }
