@@ -30,7 +30,7 @@ class UpdatePersonalidadeUseCase
             id: $output->id(),
             nome: $output->nome,
             eh_ativo: $output->eh_ativo,
-            data_criacao: $output->data_criacao(),
+            created_at: $output->data_criacao(),
         );
     }
 }

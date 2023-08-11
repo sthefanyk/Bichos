@@ -40,7 +40,7 @@ class CreatePersonalidadeUseCaseUnitTest extends TestCase
         $this->assertNotEmpty($responseUseCase->id);
         $this->assertEquals($personalidadeName, $responseUseCase->nome);
         $this->assertTrue($responseUseCase->eh_ativo);
-        $this->assertNotEmpty($responseUseCase->data_criacao);
+        $this->assertNotEmpty($responseUseCase->created_at);
 
         /**
          * Spies

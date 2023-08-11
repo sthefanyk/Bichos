@@ -19,7 +19,7 @@ class PersonalidadeResource extends JsonResource
             'id' => $this->id,
             'nome' => $this->nome,
             'eh_ativo' => $this->eh_ativo,
-            'data_criacao' => Carbon::make($this->data_criacao)->format('Y-m-d H:i:s'),
+            'created_at' => Carbon::make($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
 }

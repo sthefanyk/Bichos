@@ -19,7 +19,7 @@ class ListPersonalidadeUseCase
             id: $response->id(),
             nome: $response->nome,
             eh_ativo: $response->eh_ativo,
-            data_criacao: $response->data_criacao(),
+            created_at: $response->data_criacao(),
         );
     }
 }

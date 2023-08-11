@@ -8,7 +8,7 @@ class PersonalidadeUpdateOutputDto
         public string $id,
         public string $nome,
         public bool $eh_ativo = true,
-        public string $data_criacao = '',
+        public string $created_at = '',
     ) {
     }
 }
