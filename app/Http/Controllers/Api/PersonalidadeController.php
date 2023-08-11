@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePersonalidadeRequest;
+use App\Http\Requests\UpdatePersonalidadeRequest;
 use App\Http\Resources\PersonalidadeResource;
 use Core\UseCase\DTO\Personalidade\Create\PersonalidadeCreateInputDto;
 use Core\UseCase\DTO\Personalidade\Listt\ListPersonalidadeInputDto;
 use Core\UseCase\DTO\Personalidade\PersonalidadeInputDto;
+use Core\UseCase\DTO\Personalidade\Update\PersonalidadeUpdateInputDto;
 use Core\UseCase\Personalidade\CreatePersonalidadeUseCase;
+use Core\UseCase\Personalidade\DeletePersonalidadeUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadesUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadeUseCase;
+use Core\UseCase\Personalidade\UpdatePersonalidadeUseCase;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -62,6 +66,28 @@ class PersonalidadeController extends Controller
         return (new PersonalidadeResource($response))
                     ->response()
                     ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function update(UpdatePersonalidadeRequest $request, UpdatePersonalidadeUseCase $usecase, $id)
+    {
+        $response = $usecase->execute(
+            input: new PersonalidadeUpdateInputDto(
+                id: $id,
+                nome: $request->nome,
+                eh_ativo: (bool) $request->eh_ativo ?? true,
+            )
+        );
+
+        return (new PersonalidadeResource($response))
+                    ->response()
+                    ->setStatusCode(Response::HTTP_CREATED);
+    }
+
+    public function destroy(DeletePersonalidadeUseCase $usecase,  $id)
+    {
+        $usecase->execute(new PersonalidadeInputDto($id));
+
+        return response()->noContent();
     }
 
 }

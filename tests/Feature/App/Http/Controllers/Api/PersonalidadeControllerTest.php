@@ -4,11 +4,14 @@ namespace Tests\Feature\App\Http\Controllers\Api;
 
 use App\Http\Controllers\Api\PersonalidadeController;
 use App\Http\Requests\StorePersonalidadeRequest;
+use App\Http\Requests\UpdatePersonalidadeRequest;
 use App\Models\Personalidade;
 use App\Repositories\Eloquent\PersonalidadeEloquentRepository;
 use Core\UseCase\Personalidade\CreatePersonalidadeUseCase;
+use Core\UseCase\Personalidade\DeletePersonalidadeUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadesUseCase;
 use Core\UseCase\Personalidade\ListPersonalidadeUseCase;
+use Core\UseCase\Personalidade\UpdatePersonalidadeUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -72,4 +75,39 @@ class PersonalidadeControllerTest extends TestCase
         $this->assertInstanceOf(JsonResponse::class, $response);
         $this->assertEquals(Response::HTTP_CREATED, $response->status());
     }
+
+    public function test_personalidade_update()
+    {
+        $personalidade = Personalidade::factory()->create();
+
+        $request = new UpdatePersonalidadeRequest();
+        $request->headers->set('content-type', 'application/json');
+        $request->setJson(new ParameterBag([
+            'nome' => 'Updated',
+        ]));
+
+        $response = $this->controller->update(
+            request: $request,
+            usecase: new UpdatePersonalidadeUseCase($this->repository),
+            id: $personalidade->id
+        );
+
+        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertEquals(Response::HTTP_CREATED, $response->status());
+        $this->assertDatabaseHas('personalidades', ['nome' => 'Updated']);
+    }
+
+    public function test_personalidade_delete()
+    {
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->controller->destroy(
+            usecase: new DeletePersonalidadeUseCase($this->repository),
+            id: $personalidade->id
+        );
+
+        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->status());
+        $this->assertDatabaseHas('personalidades', ['nome' => $personalidade->nome], false);
+    }
+
 }
