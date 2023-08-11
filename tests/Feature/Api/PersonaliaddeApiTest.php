@@ -5,6 +5,7 @@ namespace Tests\Feature\Api;
 use App\Models\Personalidade;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\Response;
 use Tests\TestCase;
 
 class PersonaliaddeApiTest extends TestCase
@@ -47,5 +48,12 @@ class PersonaliaddeApiTest extends TestCase
         $response->assertStatus(200);
         $this->assertEquals(2, $response['meta']['current_page']);
         $this->assertEquals(30, $response['meta']['total']);
+    }
+
+    public function test_list_notfound_personalidades()
+    {
+        $response = $this->getJson("$this->endpoint/fake_value");
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 }
