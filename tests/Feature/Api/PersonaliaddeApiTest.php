@@ -75,4 +75,20 @@ class PersonaliaddeApiTest extends TestCase
         ]);
         $this->assertEquals($personalidade->id, $response['data']['id']);
     }
+
+    public function test_validations_store_personalidade()
+    {
+        $data = [];
+
+        $response = $this->postJson($this->endpoint, $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'nome',
+            ],
+        ]);
+    }
 }
