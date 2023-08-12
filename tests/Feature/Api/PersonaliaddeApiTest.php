@@ -179,4 +179,24 @@ class PersonaliaddeApiTest extends TestCase
             'eh_ativo' => true,
         ]);
     }
+
+    public function test_not_found_delete_personalidade()
+    {
+        $response = $this->deleteJson("{$this->endpoint}/fake_id");
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function test_delete_personalidade()
+    {
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->deleteJson("{$this->endpoint}/{$personalidade->id}");
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertSoftDeleted('personalidades', [
+            'id' => $personalidade->id
+        ]);
+    }
 }
