@@ -63,9 +63,7 @@ class PersonalidadeController extends Controller
     {
         $response = $usecase->execute(new PersonalidadeInputDto($id));
 
-        return (new PersonalidadeResource($response))
-                    ->response()
-                    ->setStatusCode(Response::HTTP_CREATED);
+        return (new PersonalidadeResource($response))->response();
     }
 
     public function update(UpdatePersonalidadeRequest $request, UpdatePersonalidadeUseCase $usecase, $id)
@@ -78,9 +76,7 @@ class PersonalidadeController extends Controller
             )
         );
 
-        return (new PersonalidadeResource($response))
-                    ->response()
-                    ->setStatusCode(Response::HTTP_CREATED);
+        return (new PersonalidadeResource($response))->response();
     }
 
     public function destroy(DeletePersonalidadeUseCase $usecase,  $id)

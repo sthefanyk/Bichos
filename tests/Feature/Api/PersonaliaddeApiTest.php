@@ -50,10 +50,29 @@ class PersonaliaddeApiTest extends TestCase
         $this->assertEquals(30, $response['meta']['total']);
     }
 
-    public function test_list_notfound_personalidades()
+    public function test_list_not_found_personalidades()
     {
         $response = $this->getJson("$this->endpoint/fake_value");
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function test_list_personalidades()
+    {
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->getJson("$this->endpoint/{$personalidade->id}");
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'nome',
+                'eh_ativo',
+                'created_at',
+            ],
+        ]);
+        $this->assertEquals($personalidade->id, $response['data']['id']);
     }
 }

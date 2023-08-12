@@ -73,7 +73,7 @@ class PersonalidadeControllerTest extends TestCase
         );
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(Response::HTTP_CREATED, $response->status());
+        $this->assertEquals(Response::HTTP_OK, $response->status());
     }
 
     public function test_personalidade_update()
@@ -93,7 +93,7 @@ class PersonalidadeControllerTest extends TestCase
         );
 
         $this->assertInstanceOf(JsonResponse::class, $response);
-        $this->assertEquals(Response::HTTP_CREATED, $response->status());
+        $this->assertEquals(Response::HTTP_OK, $response->status());
         $this->assertDatabaseHas('personalidades', ['nome' => 'Updated']);
     }
 
