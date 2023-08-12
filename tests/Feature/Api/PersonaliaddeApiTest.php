@@ -121,4 +121,62 @@ class PersonaliaddeApiTest extends TestCase
             'eh_ativo' => false,
         ]);
     }
+
+    public function test_not_found_update_personalidade()
+    {
+        $data = [
+            'nome' => 'nova personalidade',
+            'eh_ativo' => false,
+        ];
+
+        $response = $this->putJson("{$this->endpoint}/fake_id", $data);
+
+        $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function test_validations_update_personalidade()
+    {
+        $data = [];
+
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->putJson("{$this->endpoint}/{$personalidade->id}", $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $response->assertJsonStructure([
+            'message',
+            'errors' => [
+                'nome',
+            ],
+        ]);
+    }
+
+    public function test_update_personalidade()
+    {
+        $data = [
+            'nome' => 'nome atualizado'
+        ];
+
+        $personalidade = Personalidade::factory()->create();
+
+        $response = $this->putJson("{$this->endpoint}/{$personalidade->id}", $data);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'nome',
+                'eh_ativo',
+                'created_at',
+            ],
+        ]);
+
+        $this->assertDatabaseHas('personalidades', [
+            'id' => $response['data']['id'],
+            'nome' => 'nome atualizado',
+            'eh_ativo' => true,
+        ]);
+    }
 }

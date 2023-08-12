@@ -24,7 +24,11 @@ class UpdatePersonalidadeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome' => [
+                'required',
+                'min:3',
+                'max:255',
+            ]
         ];
     }
 }
