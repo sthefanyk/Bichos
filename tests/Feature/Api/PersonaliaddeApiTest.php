@@ -91,4 +91,34 @@ class PersonaliaddeApiTest extends TestCase
             ],
         ]);
     }
+
+    public function test_store_personalidade()
+    {
+        $data = [
+            'nome' => 'nova personalidade',
+            'eh_ativo' => false,
+        ];
+
+        $response = $this->postJson($this->endpoint, $data);
+
+        $response->assertStatus(Response::HTTP_CREATED);
+
+        $response->assertJsonStructure([
+            'data' => [
+                'id',
+                'nome',
+                'eh_ativo',
+                'created_at',
+            ],
+        ]);
+
+        $this->assertEquals('nova personalidade', $response['data']['nome']);
+        $this->assertEquals(false, $response['data']['eh_ativo']);
+
+        $this->assertDatabaseHas('personalidades', [
+            'id' => $response['data']['id'],
+            'nome' => $response['data']['nome'],
+            'eh_ativo' => false,
+        ]);
+    }
 }
