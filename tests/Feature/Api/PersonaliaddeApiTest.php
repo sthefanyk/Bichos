@@ -17,6 +17,7 @@ class PersonaliaddeApiTest extends TestCase
         $response = $this->getJson($this->endpoint);
 
         $response->assertStatus(200);
+        $response->assertJsonCount(0, 'data');
     }
 
     public function test_list_all_personalidades()
@@ -37,17 +38,20 @@ class PersonaliaddeApiTest extends TestCase
                 'from'
             ]
         ]);
+        $response->assertJsonCount(15, 'data');
     }
 
     public function test_list_paginate_personalidades()
     {
-        Personalidade::factory()->count(30)->create();
+        Personalidade::factory()->count(25)->create();
 
         $response = $this->getJson("$this->endpoint?page=2");
 
         $response->assertStatus(200);
         $this->assertEquals(2, $response['meta']['current_page']);
-        $this->assertEquals(30, $response['meta']['total']);
+        $this->assertEquals(25, $response['meta']['total']);
+        $response->assertJsonCount(10, 'data');
+
     }
 
     public function test_list_not_found_personalidades()
